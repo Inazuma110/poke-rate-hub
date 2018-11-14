@@ -1,6 +1,8 @@
 const puppeteer = require('puppeteer');
 const PuppeteerHar = require('puppeteer-har');
 const fs = require('fs');
+const request = require('request');
+
 
 const getHar = async(savedataIdCode) => {
   const url = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
@@ -40,9 +42,27 @@ const getSavedataId = (file) => {
   return savedataId;
 }
 
+const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
+  const url = "https://3ds.pokemon-gl.com/frontendApi/mypage/getGbuBattleList";
+  const referer = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
+
+  let headers = JSON.parse(fs.readFileSync('./headers.json', 'utf-8'));
+  headers['Referer'] = referer;
+
+  let payload = JSON.parse(fs.readFileSync('./payload.json', 'utf-8'));
+  payload['accountId'] = accountId;
+  payload['savedataId'] = savedataId;
+
+  console.log(payload);
+
+}
+
 (async () => {
-  await getHar('A-326-2494-J');
-  await console.log(getAccoutId('./results.har'));
-  await console.log(getSavedataId('./results.har'));
+  const savedataIdCode = 'A-326-2494-J';
+  await getHar(savedataIdCode);
+  const accountId = await getAccoutId('./results.har');
+  const savedataId = await getSavedataId('./results.har');
+  await getBattleHistory(accountId, savedataId, savedataIdCode);
+
 })();
 
