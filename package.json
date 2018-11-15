@@ -12,7 +12,6 @@
   "dependencies": {
     "puppeteer": "^1.10.0",
     "puppeteer-har": "^1.0.5",
-    "request": "^2.88.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
