@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const PuppeteerHar = require('puppeteer-har');
 const fs = require('fs');
+const exec = require('child_process').exec;
 
 
 const getHar = async(savedataIdCode) => {
@@ -48,14 +49,22 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
   let headers = JSON.parse(fs.readFileSync('./headersTemplate.json', 'utf-8'));
   headers['Referer'] = referer;
 
-  let payload = JSON.parse(fs.readFileSync('./payloadTemplate.json', 'utf-8'));
-  payload['accountId'] = accountId;
-  payload['savedataId'] = savedataId;
+  let form = JSON.parse(fs.readFileSync('./payloadTemplate.json', 'utf-8'));
+  form['accountId'] = accountId;
+  form['savedataId'] = savedataId;
 
-  console.log(headers);
-  console.log(payload);
+  const arg1 = JSON.stringify(headers);
+  const arg2 = JSON.stringify(form);
 
+  fs.writeFileSync('headers.json', arg1);
+  fs.writeFileSync('form.json', arg2);
 
+  const res = exec('python3 getBattleHistory.py',
+    (err, sout, serr) => {
+      console.log(sout);
+      console.log(serr);
+    }
+  );
 }
 
 (async () => {
