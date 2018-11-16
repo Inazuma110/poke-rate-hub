@@ -59,17 +59,17 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
   fs.writeFileSync('headers.json', arg1);
   fs.writeFileSync('form.json', arg2);
 
-  const res = exec('python3 getBattleHistory.py',
-    (err, sout, serr) => {
-      console.log(sout);
-      console.log(serr);
-    }
-  );
+  const res = exec('python3 getBattleHistory.py', (err, sout, serr) => {
+    console.log(sout);
+    console.log(serr);
+  });
 }
 
 (async () => {
-  const savedataIdCode = 'A-326-2494-J';
-  // await getHar(savedataIdCode);
+  const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
+  // const savedataIdCode = 'G-277-9551-T'; // Moon
+  // const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
+  await getHar(savedataIdCode);
   const accountId = await getAccoutId('./results.har');
   const savedataId = await getSavedataId('./results.har');
   await getBattleHistory(accountId, savedataId, savedataIdCode);
