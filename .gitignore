@@ -14,3 +14,7 @@ yarn-error.log*
 *.sln
 
 src/getData/results.har
+src/getData/headers.json
+src/getData/form.json
+src/getData/battleHistory.json
+
