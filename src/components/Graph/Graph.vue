@@ -1,9 +1,8 @@
-<template src="./index.html">
+<template src="./graph.html">
 </template>
 
 <script>
 const graph = require('./graph').default;
-
 
 export default {
   name: 'Graph',
