@@ -1,26 +1,24 @@
-<template>
-  <div class="graph">
-    <h1>{{ msg }}</h1>
-  </div>
+<template src="./index.html">
 </template>
 
 <script>
+const graph = require('./graph').default;
 const test = require('./test').default;
-test.test();
+
 
 export default {
   name: 'Graph',
   data () {
     return {
-      msg: 'Welcome to pokemon'
+      msg: 'Welcome to pokemon',
     }
   },
   methods:{
-    // test: test
+    writeCal(){ graph.write() },
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./graph.css">
+<style src="./graph.css">
 </style>
