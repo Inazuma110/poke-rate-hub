@@ -1,6 +1,6 @@
-const calendarHeatmap = require('./heatmap/calendar-heatmap').default.calendarHeatmap;
+const calendarHeatmap = require('./calendar-heatmap').default.calendarHeatmap;
 
-const write = () => {
+const display = () => {
   const now = moment().endOf('day').toDate();
   const yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
   const chartData = d3.time.days(yearAgo, now).map(function (dateElement) {
@@ -23,4 +23,4 @@ const write = () => {
   heatmap();  // render the chart
 }
 
-export default { write }
+export default { display }

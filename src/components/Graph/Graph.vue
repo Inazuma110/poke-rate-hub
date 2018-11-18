@@ -3,7 +3,6 @@
 
 <script>
 const graph = require('./graph').default;
-const test = require('./test').default;
 
 
 export default {
@@ -14,7 +13,7 @@ export default {
     }
   },
   methods:{
-    writeCal(){ graph.write() },
+    display(){ graph.display() },
   },
 }
 </script>
