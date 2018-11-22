@@ -13,8 +13,8 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-src/getData/results.har
-src/getData/headers.json
-src/getData/form.json
-src/getData/battleHistory.json
 
+src/components/Graph/data/battleHistory.json
+src/components/Graph/data/form.json
+src/components/Graph/data/headers.json
+src/components/Graph/data/results.har
