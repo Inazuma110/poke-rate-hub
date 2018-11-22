@@ -72,9 +72,9 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
 }
 
 (async () => {
-  const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
+  // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
-  // const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
+  const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
   await getHar(savedataIdCode);
   const accountId = await getAccoutId(harFilePath);
   console.log(accountId);
