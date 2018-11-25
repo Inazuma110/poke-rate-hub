@@ -1,39 +1,38 @@
-const puppeteer = require('puppeteer');
-const PuppeteerHar = require('puppeteer-har');
 const fs = require('fs');
 const exec = require('child_process').exec;
+const req = require('request-promise');
 
 const dataFilePath = './src/components/Graph/data/';
 
-let harData, accountId, savedataId;
+let accountId, savedataId;
 
 
-const getHar = async(savedataIdCode) => {
-  const url = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-
-  const har = new PuppeteerHar(page);
-  await har.start();
-
-  await page.goto(url);
-  harData = await har.stop();
-  await browser.close();
-};
-
-const getValue = () => {
-  for(const entry of harData['log']['entries']){
-    if(entry['request']['postData'] == undefined) continue;
-    if(entry['request']['postData']['params'] == undefined) continue;
-    for(const param of entry['request']['postData']['params']){
-      if(param['name'] == 'accountId') accountId = param['value'];
-      if(param['name'] == 'savedataId') savedataId = param['value'];
-    }
+const getValue = async(savedataIdCode) => {
+  const url = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/profile/`;
+  const opt = {
+    url: url,
+    json: true,
   }
+
+  let body = await req.get (opt, (e, res, b) => {
+    return b;
+  });
+
+  const accountIdRe = /USERS_ACCOUNT_ID='(.*?)'/g;
+  accountId = body.match(accountIdRe)[0];
+  accountId = accountId.replace(accountIdRe, '$1');
+
+  const savedataIdRe = /USERS_SAVEDATA_ID='(.*?)'/g;
+  savedataId = body.match(savedataIdRe)[0];
+  savedataId = savedataId.replace(savedataIdRe, '$1');
+
+
+  return body;
+
 }
 
 
-const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
+const getBattleHistory = (savedataIdCode) => {
   const url = "https://3ds.pokemon-gl.com/frontendApi/mypage/getGbuBattleList";
   const referer = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
 
@@ -49,6 +48,7 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
   const arg1 = JSON.stringify(headers);
   const arg2 = JSON.stringify(form);
 
+
   fs.writeFileSync('./src/components/Graph/data/headers.json', arg1);
   fs.writeFileSync('./src/components/Graph/data/form.json', arg2);
 
@@ -60,12 +60,12 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
 }
 
 (async () => {
-  const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
+  // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
-  // const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
-  await getHar(savedataIdCode);
-  getValue();
-  // await getBattleHistory(accountId, savedataId, savedataIdCode);
+  const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
+  // await getHar(savedataIdCode);
+  await getValue(savedataIdCode);
+  await getBattleHistory(savedataIdCode);
 
 })();
 
