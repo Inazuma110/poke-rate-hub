@@ -6,6 +6,8 @@ const exec = require('child_process').exec;
 const dataFilePath = './src/components/Graph/data/';
 const harFilePath = `${dataFilePath}results.har`;
 
+let accountId, savedataId;
+
 
 const getHar = async(savedataIdCode) => {
   const url = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
@@ -16,34 +18,23 @@ const getHar = async(savedataIdCode) => {
   await har.start({ path: harFilePath });
 
   await page.goto(url);
-
   await har.stop();
   await browser.close();
 };
 
-/*
- * @params file .har file path
- * @return accountId accountId
- */
-const getAccoutId = (file) => {
-  let f = fs.readFileSync(file, 'utf-8');
-  const re = /accountId.*?value":"(.*?)"/g;
-  let accountId = f.match(re)[0];
-  accountId = accountId.replace(re, '$1');
-  return accountId;
+const getValue = (file) => {
+  let f = JSON.parse(fs.readFileSync(file, 'utf-8'));
+  // console.log(f['log']['entries']['request']['postData']);
+  for(const entry of f['log']['entries']){
+    if(entry['request']['postData'] == undefined) continue;
+    if(entry['request']['postData']['params'] == undefined) continue;
+    for(const param of entry['request']['postData']['params']){
+      if(param['name'] == 'accountId') accountId = param['value'];
+      if(param['name'] == 'savedataId') savedataId = param['value'];
+    }
+  }
 }
 
-/*
- * @params file .har file path
- * @return savedataId savedataId
- */
-const getSavedataId = (file) => {
-  let f = fs.readFileSync(file, 'utf-8');
-  const re = /savedataId.*?value":"(.*?)"/g;
-  let savedataId = f.match(re)[0];
-  savedataId = savedataId.replace(re, '$1');
-  return savedataId;
-}
 
 const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
   const url = "https://3ds.pokemon-gl.com/frontendApi/mypage/getGbuBattleList";
@@ -72,14 +63,12 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
 }
 
 (async () => {
-  // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
+  const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
-  const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
-  await getHar(savedataIdCode);
-  const accountId = await getAccoutId(harFilePath);
-  console.log(accountId);
-  const savedataId = await getSavedataId(harFilePath);
-  await getBattleHistory(accountId, savedataId, savedataIdCode);
+  // const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
+  // await getHar(savedataIdCode);
+  getValue(harFilePath);
+  // await getBattleHistory(accountId, savedataId, savedataIdCode);
 
 })();
 
