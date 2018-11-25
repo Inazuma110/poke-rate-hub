@@ -4,9 +4,8 @@ const fs = require('fs');
 const exec = require('child_process').exec;
 
 const dataFilePath = './src/components/Graph/data/';
-const harFilePath = `${dataFilePath}results.har`;
 
-let accountId, savedataId;
+let harData, accountId, savedataId;
 
 
 const getHar = async(savedataIdCode) => {
@@ -15,17 +14,15 @@ const getHar = async(savedataIdCode) => {
   const page = await browser.newPage();
 
   const har = new PuppeteerHar(page);
-  await har.start({ path: harFilePath });
+  await har.start();
 
   await page.goto(url);
-  await har.stop();
+  harData = await har.stop();
   await browser.close();
 };
 
-const getValue = (file) => {
-  let f = JSON.parse(fs.readFileSync(file, 'utf-8'));
-  // console.log(f['log']['entries']['request']['postData']);
-  for(const entry of f['log']['entries']){
+const getValue = () => {
+  for(const entry of harData['log']['entries']){
     if(entry['request']['postData'] == undefined) continue;
     if(entry['request']['postData']['params'] == undefined) continue;
     for(const param of entry['request']['postData']['params']){
@@ -66,8 +63,8 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
   const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
   // const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
-  // await getHar(savedataIdCode);
-  getValue(harFilePath);
+  await getHar(savedataIdCode);
+  getValue();
   // await getBattleHistory(accountId, savedataId, savedataIdCode);
 
 })();
