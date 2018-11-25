@@ -10,8 +10,6 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "puppeteer": "^1.10.0",
-    "puppeteer-har": "^1.0.5",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
@@ -38,6 +36,8 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "rimraf": "^2.6.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
