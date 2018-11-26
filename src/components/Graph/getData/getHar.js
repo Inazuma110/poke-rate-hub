@@ -1,51 +1,34 @@
-const puppeteer = require('puppeteer');
-const PuppeteerHar = require('puppeteer-har');
 const fs = require('fs');
 const exec = require('child_process').exec;
+const req = require('request-promise');
 
 const dataFilePath = './src/components/Graph/data/';
-const harFilePath = `${dataFilePath}results.har`;
+
+let accountId, savedataId;
 
 
-const getHar = async(savedataIdCode) => {
-  const url = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+const getValue = async(savedataIdCode) => {
+  const url = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/profile/`;
+  const opt = {
+    url: url,
+    json: true,
+  }
 
-  const har = new PuppeteerHar(page);
-  await har.start({ path: harFilePath });
+  let body = await req.get (opt, (e, res, b) => {
+    return b;
+  });
 
-  await page.goto(url);
+  const accountIdRe = /USERS_ACCOUNT_ID='(.*?)'/g;
+  accountId = body.match(accountIdRe)[0];
+  accountId = accountId.replace(accountIdRe, '$1');
 
-  await har.stop();
-  await browser.close();
-};
-
-/*
- * @params file .har file path
- * @return accountId accountId
- */
-const getAccoutId = (file) => {
-  let f = fs.readFileSync(file, 'utf-8');
-  const re = /accountId.*?value":"(.*?)"/g;
-  let accountId = f.match(re)[0];
-  accountId = accountId.replace(re, '$1');
-  return accountId;
+  const savedataIdRe = /USERS_SAVEDATA_ID='(.*?)'/g;
+  savedataId = body.match(savedataIdRe)[0];
+  savedataId = savedataId.replace(savedataIdRe, '$1');
 }
 
-/*
- * @params file .har file path
- * @return savedataId savedataId
- */
-const getSavedataId = (file) => {
-  let f = fs.readFileSync(file, 'utf-8');
-  const re = /savedataId.*?value":"(.*?)"/g;
-  let savedataId = f.match(re)[0];
-  savedataId = savedataId.replace(re, '$1');
-  return savedataId;
-}
 
-const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
+const getBattleHistory = async(savedataIdCode) => {
   const url = "https://3ds.pokemon-gl.com/frontendApi/mypage/getGbuBattleList";
   const referer = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
 
@@ -61,6 +44,7 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
   const arg1 = JSON.stringify(headers);
   const arg2 = JSON.stringify(form);
 
+
   fs.writeFileSync('./src/components/Graph/data/headers.json', arg1);
   fs.writeFileSync('./src/components/Graph/data/form.json', arg2);
 
@@ -75,11 +59,9 @@ const getBattleHistory = (accountId, savedataId, savedataIdCode) => {
   // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
   const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
-  await getHar(savedataIdCode);
-  const accountId = await getAccoutId(harFilePath);
-  console.log(accountId);
-  const savedataId = await getSavedataId(harFilePath);
-  await getBattleHistory(accountId, savedataId, savedataIdCode);
+
+  await getValue(savedataIdCode);
+  await getBattleHistory(savedataIdCode);
 
 })();
 

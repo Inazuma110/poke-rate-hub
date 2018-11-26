@@ -8,7 +8,7 @@ export default {
   name: 'Graph',
   data () {
     return {
-      msg: 'Welcome to pokemon',
+      msg: 'Welcome to Pokemon',
     }
   },
   methods:{
