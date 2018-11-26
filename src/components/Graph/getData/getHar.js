@@ -44,18 +44,6 @@ const getBattleHistory = async(savedataIdCode) => {
   const arg1 = JSON.stringify(headers);
   const arg2 = JSON.stringify(form);
 
-  //
-  // const opt = {
-  //   url: url,
-  //   method: 'POST',
-  //   headers: headers,
-  //   body: arg2,
-  //   // json: true,
-  // }
-  //
-  // await req.post(opt, (err, res, body) => {
-  //   console.log(body);
-  // });
 
   fs.writeFileSync('./src/components/Graph/data/headers.json', arg1);
   fs.writeFileSync('./src/components/Graph/data/form.json', arg2);

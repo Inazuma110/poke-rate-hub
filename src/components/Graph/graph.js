@@ -1,7 +1,6 @@
 const calendarHeatmap = require('./calendar-heatmap').default.calendarHeatmap;
 
 
-
 const parseBattleHistory = () => {
   const battleHistory = require('./data/battleHistory.json');
 
