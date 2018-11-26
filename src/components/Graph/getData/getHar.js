@@ -25,14 +25,10 @@ const getValue = async(savedataIdCode) => {
   const savedataIdRe = /USERS_SAVEDATA_ID='(.*?)'/g;
   savedataId = body.match(savedataIdRe)[0];
   savedataId = savedataId.replace(savedataIdRe, '$1');
-
-
-  return body;
-
 }
 
 
-const getBattleHistory = (savedataIdCode) => {
+const getBattleHistory = async(savedataIdCode) => {
   const url = "https://3ds.pokemon-gl.com/frontendApi/mypage/getGbuBattleList";
   const referer = `https://3ds.pokemon-gl.com/user/${savedataIdCode}/battle/`;
 
@@ -48,6 +44,18 @@ const getBattleHistory = (savedataIdCode) => {
   const arg1 = JSON.stringify(headers);
   const arg2 = JSON.stringify(form);
 
+  //
+  // const opt = {
+  //   url: url,
+  //   method: 'POST',
+  //   headers: headers,
+  //   body: arg2,
+  //   // json: true,
+  // }
+  //
+  // await req.post(opt, (err, res, body) => {
+  //   console.log(body);
+  // });
 
   fs.writeFileSync('./src/components/Graph/data/headers.json', arg1);
   fs.writeFileSync('./src/components/Graph/data/form.json', arg2);
@@ -63,7 +71,7 @@ const getBattleHistory = (savedataIdCode) => {
   // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
   const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
-  // await getHar(savedataIdCode);
+
   await getValue(savedataIdCode);
   await getBattleHistory(savedataIdCode);
 

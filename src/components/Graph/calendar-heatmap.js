@@ -21,7 +21,7 @@ function calendarHeatmap() {
   var weekStart = 0; //0 for Sunday, 1 for Monday
   var locale = {
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    days: ['S', 'Mon', 'T', 'Wed', 'T', 'Fri', 'S'],
     No: 'No',
     on: 'on',
     Less: 'Less',
