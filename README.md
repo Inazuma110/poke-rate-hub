@@ -11,7 +11,10 @@
 yarn install
 
 # serve with hot reload at localhost:8080
-yarn run dev  # in project root
+yarn run dev
+
+# start api server
+node src/api/server.js # in project root
 
 # build for production with minification
 yarn run build
