@@ -14,7 +14,6 @@ yarn-error.log*
 *.sln
 
 
-src/components/Graph/data/battleHistory.json
-src/components/Graph/data/form.json
-src/components/Graph/data/headers.json
-src/components/Graph/data/results.har
+src/api/data/battleHistory.json
+src/api/data/form.json
+src/api/data/headers.json

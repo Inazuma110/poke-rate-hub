@@ -27,8 +27,6 @@ const getValue = async(savedataIdCode) => {
   const savedataIdRe = /USERS_SAVEDATA_ID='(.*?)'/g;
   savedataId = body.match(savedataIdRe)[0];
   savedataId = savedataId.replace(savedataIdRe, '$1');
-
-  console.log(accountId);
 }
 
 const getBattleHistory = async(savedataIdCode) => {
@@ -62,6 +60,7 @@ const getBattleHistory = async(savedataIdCode) => {
 
 // http://localhost:3000/api/v1/battleHistory
 app.get('/api/v1/battleHistory', async(req, res) => {
+  console.log('get erquest');
   // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
   const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
@@ -69,12 +68,9 @@ app.get('/api/v1/battleHistory', async(req, res) => {
   await getValue(savedataIdCode);
   await getBattleHistory(savedataIdCode);
 
-  // クライアントに送るJSONデータ
-  // JSONを送信する
   const battleHistory =
     await JSON.parse(fs.readFileSync(`${dataFilePath}battleHistory.json`));
   await res.json(battleHistory);
 });
 
-// ポート3000でサーバを立てる
 app.listen(3000, () => console.log('Listening on port 3000'));

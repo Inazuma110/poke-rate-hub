@@ -2,7 +2,6 @@ const calendarHeatmap = require('./calendar-heatmap').default.calendarHeatmap;
 
 
 const parseBattleHistory = () => {
-  const battleHistory = require('./data/battleHistory.json');
 
   let counter = new Map();
   battleHistory['battleList'].forEach((battle) => {
