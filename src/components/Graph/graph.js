@@ -1,7 +1,9 @@
 const calendarHeatmap = require('./calendar-heatmap').default.calendarHeatmap;
 
+const getApiData = () => {
+}
 
-const parseBattleHistory = () => {
+const parseBattleHistory = (battleHistory) => {
 
   let counter = new Map();
   battleHistory['battleList'].forEach((battle) => {
@@ -15,8 +17,8 @@ const parseBattleHistory = () => {
 }
 
 
-const display = () => {
-  const counter = parseBattleHistory();
+const display = (battleHistory) => {
+  const counter = parseBattleHistory(battleHistory);
   const now = moment().endOf('day').toDate();
   const yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
 
@@ -41,6 +43,8 @@ const display = () => {
     });
 
   heatmap();  // render the chart
+
 }
 
-export default { display }
+
+export default { display, getApiData }

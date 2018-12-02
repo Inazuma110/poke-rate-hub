@@ -3,16 +3,38 @@
 
 <script>
 const graph = require('./graph').default;
+import axios from 'axios';
 
 export default {
   name: 'Graph',
   data () {
     return {
-      msg: 'Welcome to Pokemon',
+      battleHistory: null,
     }
   },
   methods:{
-    display(){ graph.display() },
+    display() {
+      const self = this;
+      const axiosBase = require('axios');
+      const axios = axiosBase.create({
+      baseURL: 'http://localhost:3000',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        responseType: 'json'
+      });
+
+      axios.get('/api/v1/battleHistory')
+        .then(function(response) {
+          self.battleHistory = response.data;
+          graph.display(self.battleHistory);
+        })
+        .catch(function(error) {
+          console.log('ERROR!! occurred in Backend.')
+          console.log(error);
+        });
+    },
   },
 }
 </script>

@@ -56,11 +56,13 @@ const getBattleHistory = async(savedataIdCode) => {
     });
 }
 
-
+const cors = require('cors');
+app.use(cors());
 
 // http://localhost:3000/api/v1/battleHistory
 app.get('/api/v1/battleHistory', async(req, res) => {
-  console.log('get erquest');
+  console.log('get request');
+
   // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
   // const savedataIdCode = 'G-277-9551-T'; // Moon
   const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
