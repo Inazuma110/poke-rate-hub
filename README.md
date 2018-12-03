@@ -2,6 +2,10 @@
 
 > Create Pokemon rating battle graph like GitHub!
 
+## Example SavedataIdCode
+- A-326-2494-J (Ultra Sun)
+- E-454-0005-X (Ultra Moon)
+- G-277-9551-T (Moon)
 
 
 ## Build Setup

@@ -2,7 +2,12 @@
   <h1>
     Welcome to PokeRateHub!!
   </h1>
-  <button @click="display()">Create</button>
+  <center>
+    <input v-model="savedataIdCode" placeholder="A-000-0000-A">
+    <button @click="display()">Create</button>
+  </center>
+
+  {{ successCreate }}
 
 
 </div>

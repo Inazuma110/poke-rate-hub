@@ -61,18 +61,26 @@ app.use(cors());
 
 // http://localhost:3000/api/v1/battleHistory
 app.get('/api/v1/battleHistory', async(req, res) => {
-  console.log('get request');
+  const savedataIdCode = await req.query.savedataIdCode;
 
-  // const savedataIdCode = 'A-326-2494-J'; // Ultra Sun
-  // const savedataIdCode = 'G-277-9551-T'; // Moon
-  const savedataIdCode = 'E-454-0005-X'; // Ultra Moon
+  console.log(req.query.savedataIdCode);
+  console.log(`GET Request: ${savedataIdCode}`);
 
-  await getValue(savedataIdCode);
-  await getBattleHistory(savedataIdCode);
+
+  try{
+    await getValue(savedataIdCode);
+    await getBattleHistory(savedataIdCode);
+  }catch(err){
+    await res.json({'statusCode': '4444'});
+    return;
+  }
 
   const battleHistory =
     await JSON.parse(fs.readFileSync(`${dataFilePath}battleHistory.json`));
+
+
   await res.json(battleHistory);
 });
+
 
 app.listen(3000, () => console.log('Listening on port 3000'));

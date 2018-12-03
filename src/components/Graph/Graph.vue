@@ -10,6 +10,8 @@ export default {
   data () {
     return {
       battleHistory: null,
+      savedataIdCode: '',
+      successCreate: null,
     }
   },
   methods:{
@@ -25,10 +27,15 @@ export default {
         responseType: 'json'
       });
 
-      axios.get('/api/v1/battleHistory')
+      axios.get(`/api/v1/battleHistory?savedataIdCode=${this.savedataIdCode}`)
         .then(function(response) {
+          if(response.data['statusCode'] == '4444'){
+            self.successCreate = false;
+            return;
+          }
           self.battleHistory = response.data;
           graph.display(self.battleHistory);
+          self.successCreate = true;
         })
         .catch(function(error) {
           console.log('ERROR!! occurred in Backend.')
