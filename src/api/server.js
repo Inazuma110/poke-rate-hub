@@ -63,7 +63,6 @@ app.use(cors());
 app.get('/api/v1/battleHistory', async(req, res) => {
   const savedataIdCode = await req.query.savedataIdCode;
 
-  console.log(req.query.savedataIdCode);
   console.log(`GET Request: ${savedataIdCode}`);
 
 
