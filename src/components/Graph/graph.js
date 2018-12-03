@@ -1,7 +1,5 @@
 const calendarHeatmap = require('./calendar-heatmap').default.calendarHeatmap;
 
-const getApiData = () => {
-}
 
 const parseBattleHistory = (battleHistory) => {
 
@@ -47,4 +45,4 @@ const display = (battleHistory) => {
 }
 
 
-export default { display, getApiData }
+export default { display }
