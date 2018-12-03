@@ -3,11 +3,13 @@
     Welcome to PokeRateHub!!
   </h1>
   <center>
+    <div v-if="successCreate === true">
+      Create success!!
+    </div>
+    <div v-else-if="successCreate === false">
+      Error. Check SavedataIdCode and try again.
+    </div>
     <input v-model="savedataIdCode" placeholder="A-000-0000-A">
     <button @click="display()">Create</button>
   </center>
-
-  {{ successCreate }}
-
-
 </div>
