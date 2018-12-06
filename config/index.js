@@ -11,14 +11,6 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // proxy all requests starting with /api to jsonplaceholder
-      '/api': {
-        target: 'http://localhost:3000/api/v1/battleHistory',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      // }
     },
 
     // Various Dev Server settings

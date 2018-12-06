@@ -4,6 +4,7 @@ const app = express();
 const fs = require('fs');
 const exec = require('child_process').exec;
 const req = require('request-promise');
+const puppeteer = require('puppeteer');
 
 const dataFilePath = './src/api/data/';
 
