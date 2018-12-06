@@ -41,8 +41,9 @@ const display = (battleHistory) => {
     });
 
   heatmap();  // render the chart
-
 }
 
 
+
 export default { display }
+// export default { display }

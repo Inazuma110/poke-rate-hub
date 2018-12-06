@@ -42,6 +42,7 @@ export default {
           console.log(error);
         });
     },
+    ss(){ graph.ss(); },
   },
 }
 </script>

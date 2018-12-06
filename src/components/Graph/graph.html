@@ -1,25 +1,36 @@
 <div class="graph">
   <center>
     <div v-if="successCreate === true">
-      <div class="alert alert-success" role="alert" style="margin-right:20px; margin-left:20px;">
+      <div class="alert alert-success" role="alert">
         <strong> Create success!!</strong>
       </div>
-      <a class="btn btn-outline-primary" href="https://twitter.com?share=">
-        Tweet result
-        <img src="../../assets/Twitter_Logo_Blue.png" width="32px" height="32px">
-      </a>
     </div>
 
     <div v-else-if="successCreate === false">
-      <div class="alert alert-danger" role="alert" style="margin-right:20px; margin-left:20px;">
+      <div class="alert alert-danger" role="alert">
         <strong>Error!</strong>  Check SavedataIdCode and try again.
       </div>
     </div>
 
     SavedataIdCode:
     <input v-model="savedataIdCode" placeholder="A-000-0000-A">
-    <button type="button" class="btn btn-success" @click="display(); successCreate=null">
+    <li>
+      <button type="button" class="btn btn-success" @click="display(); successCreate=null">
       Create
-    </button>
+      </button>
+    </li>
+    <li>
+      <div v-if="successCreate === true">
+        <a href="http://twitter.com/share?url=https://github.com/Inazuma110/poke-rate-hub&text=This is my Rating battle result in this 365 days!!&hashtags=PokeRateHub" target="_blank">
+          <button type="button" class="btn btn-outline-primary">
+            <img src="../../assets/Twitter_Logo_Blue.png" width="32px" height="32px">
+            Tweet Result
+          </button>
+        </a>
+      </div>
+      </li>
+
   </center>
+
+
 </div>
