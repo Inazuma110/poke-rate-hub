@@ -3,7 +3,17 @@
 
 <script>
 const graph = require('./graph').default;
-import axios from 'axios';
+// import axios from 'axios';
+
+const axiosBase = require('axios');
+const axios = axiosBase.create({
+  baseURL: 'http://localhost:3000',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+  },
+  responseType: 'json'
+});
 
 export default {
   name: 'Graph',
@@ -12,20 +22,12 @@ export default {
       battleHistory: null,
       savedataIdCode: '',
       successCreate: null,
+      ssPath: '',
     }
   },
   methods:{
     display() {
       const self = this;
-      const axiosBase = require('axios');
-      const axios = axiosBase.create({
-      baseURL: 'http://localhost:3000',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        responseType: 'json'
-      });
 
       axios.get(`/api/v1/battleHistory?savedataIdCode=${this.savedataIdCode}`)
         .then(function(response) {
@@ -42,7 +44,22 @@ export default {
           console.log(error);
         });
     },
-    ss(){ graph.ss(); },
+    ss(){
+      const self = this;
+      axios.get(`/api/v1/ss?savedataIdCode=${this.savedataIdCode}`)
+        .then(function(response) {
+          // if(response.data['statusCode'] == '4444'){
+          //   self.successCreate = false;
+          //   return;
+          // }
+          self.ssPath = response.data['path'];
+          // self.successCreate = true;
+        })
+        .catch(function(error) {
+          console.log('ERROR!! occurred in Backend.')
+          console.log(error);
+        });
+    },
   },
 }
 </script>
