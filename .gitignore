@@ -12,3 +12,9 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+
+src/api/data/battleHistory.json
+src/api/data/form.json
+src/api/data/headers.json
+src/api/ss/*
