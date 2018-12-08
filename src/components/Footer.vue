@@ -1,15 +1,12 @@
 <template>
 <footer class="footer">
   <div class="container">
-    <p>PokeRateHub by
-      <a href="https://github.com/Inazuma110/poke-rate-hub">
-        inazuma
-      </a>
-      <a href="https://github.com">
-        <img src="../assets/GitHub-Mark-32px.png" width="19px" height="19px">
-      </a>
-    </p>
-
+    PokeRateHub<br>
+     &copy; 2018
+     <a href="https://github.com/Inazuma110">
+       Inazuma110
+       <img src="../assets/GitHub-Mark-32px.png" width="19px" height="19px">
+     </a>
   </div>
 </footer>
 </template>
