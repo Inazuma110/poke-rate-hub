@@ -64,7 +64,7 @@ const ss = async(savedataIdCode, ssPath) => {
       '--no-sandbox',
       '--disable-setuid-sandbox'
     ],
-    headless: false,
+    // headless: false,
   });
   const page = await browser.newPage();
   await page.setViewport({ width: 1020, height: 980 })
@@ -122,6 +122,7 @@ app.get('/api/v1/ss', async(req, res) => {
 
   ss(savedataIdCode, ssPath);
   await res.json({'path': ssPath});
+
 })
 
 

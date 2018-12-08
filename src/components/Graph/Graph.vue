@@ -48,12 +48,8 @@ export default {
       const self = this;
       axios.get(`/api/v1/ss?savedataIdCode=${this.savedataIdCode}`)
         .then(function(response) {
-          // if(response.data['statusCode'] == '4444'){
-          //   self.successCreate = false;
-          //   return;
-          // }
           self.ssPath = response.data['path'];
-          // self.successCreate = true;
+          location.href = 'http://twitter.com/share?url=https://github.com/Inazuma110/poke-rate-hub&text=This is my Rating battle result in this 365 days!!&hashtags=PokeRateHub';
         })
         .catch(function(error) {
           console.log('ERROR!! occurred in Backend.')

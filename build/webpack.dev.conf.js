@@ -22,6 +22,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    // public: 'http://f9b74480.ngrok.io',
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
