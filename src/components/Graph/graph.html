@@ -13,20 +13,20 @@
     </div>
 
     SavedataIdCode:
-    <input v-model="savedataIdCode" placeholder="A-000-0000-A">
+    <input v-model="savedataIdCode" placeholder="A-000-0000-A" id="savedateidcode">
     <li>
-      <button type="button" class="btn btn-success" @click="display(); successCreate=null">
+      <button type="button" class="btn btn-success" @click="display(); successCreate=null" id="create">
       Create
       </button>
     </li>
     <li>
       <div v-if="successCreate === true">
-        <a href="http://twitter.com/share?url=https://github.com/Inazuma110/poke-rate-hub&text=This is my Rating battle result in this 365 days!!&hashtags=PokeRateHub" target="_blank">
-          <button type="button" class="btn btn-outline-primary">
+        <!-- <a href="http://twitter.com/share?url=https://github.com/Inazuma110/poke-rate-hub&text=This is my Rating battle result in this 365 days!!&hashtags=PokeRateHub" target="_blank"> -->
+          <button type="button" class="btn btn-outline-primary" @click="ss();">
             <img src="../../assets/Twitter_Logo_Blue.png" width="32px" height="32px">
             Tweet Result
           </button>
-        </a>
+        <!-- </a> -->
       </div>
       </li>
 

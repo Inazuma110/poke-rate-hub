@@ -4,7 +4,7 @@ const app = express();
 const fs = require('fs');
 const exec = require('child_process').exec;
 const req = require('request-promise');
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
 
 const dataFilePath = './src/api/data/';
 
@@ -57,6 +57,36 @@ const getBattleHistory = async(savedataIdCode) => {
     });
 }
 
+const ss = async(savedataIdCode, ssPath) => {
+  const puppeteer = require('puppeteer');
+  const browser = await puppeteer.launch({
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ],
+    // headless: false,
+  });
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1020, height: 980 })
+  await page.goto('localhost:8080');
+  await page.type('#savedateidcode', savedataIdCode);
+  await page.click('#create');
+
+  await page.waitFor('#poke');
+
+  const clip = await page.evaluate(s => {
+    const el = document.querySelector(s)
+
+    const { width, height, top: y, left: x } = el.getBoundingClientRect()
+    return { width, height, x, y }
+  }, '#poke')
+
+  let element = await page.$('#poke');
+  await page.screenshot({clip, path: ssPath});
+
+  browser.close();
+}
+
 const cors = require('cors');
 app.use(cors());
 
@@ -81,6 +111,19 @@ app.get('/api/v1/battleHistory', async(req, res) => {
 
   await res.json(battleHistory);
 });
+
+// http://localhost:3000/api/v1/ss
+app.get('/api/v1/ss', async(req, res) => {
+  const savedataIdCode = await req.query.savedataIdCode;
+  const ssPath = `./src/api/ss/${savedataIdCode}.png`
+
+  console.log(`GET SS Request: ${savedataIdCode}`);
+  console.log();
+
+  ss(savedataIdCode, ssPath);
+  await res.json({'path': ssPath});
+
+})
 
 
 app.listen(3000, () => console.log('Listening on port 3000'));
