@@ -1,6 +1,9 @@
 # poke-rate-hub
 ## Overview
-> Create Pokemon rating battle graph like GitHub!
+Create Pokemon rating battle graph like GitHub!
+
+# Warning
+This repository does not work because the [Pokémon Global Link](https://3ds.pokemon-gl.com/) has been terminated.
 
 ## Usage
 ### Howto get savedataIdCode
